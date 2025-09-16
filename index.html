@@ -1,0 +1,421 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>oposiciones.ia — IA para opositores: convocatorias, plan de estudio y tests</title>
+  <meta name="description" content="La primera plataforma de IA para opositores en España: encuentra tu convocatoria, genera tu plan de estudio y practica con tests y esquemas creados por IA." />
+  <meta name="theme-color" content="#0ea5e9" />
+
+  <!-- Open Graph / Twitter -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="oposiciones.ia — IA para opositores" />
+  <meta property="og:description" content="Convocatorias, planes de estudio, tests y esquemas con IA." />
+  <meta property="og:image" content="https://dummyimage.com/1200x630/0ea5e9/ffffff&text=oposiciones.ia" />
+  <meta property="og:url" content="https://oposiciones.ia" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Favicon (puedes reemplazar por tus propios assets) -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='16' fill='%230ea5e9'/%3E%3Ctext x='50' y='58' font-size='42' text-anchor='middle' fill='white' font-family='Arial,Helvetica,sans-serif'%3Eia%3C/text%3E%3C/svg%3E" />
+
+  <!-- Fuente -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Estilos -->
+  <style>
+    :root{
+      --bg: #0b1220;         /* fondo general oscuro elegante */
+      --panel: #0f172a;      /* paneles */
+      --muted: #94a3b8;      /* texto secundario */
+      --text: #e2e8f0;       /* texto principal */
+      --brand: #0ea5e9;      /* azul */
+      --brand-2: #38bdf8;    /* azul claro */
+      --ok: #22c55e;         /* verde */
+      --warn: #f59e0b;       /* ámbar */
+      --danger: #ef4444;     /* rojo */
+      --ring: 0 0 0 6px rgba(14,165,233,.2);
+      --radius: 16px;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;line-height:1.5}
+    a{color:var(--brand);text-decoration:none}
+    a:hover{text-decoration:underline}
+    .container{width:min(1120px, 94vw);margin-inline:auto}
+
+    /* NAV */
+    header{position:sticky;top:0;z-index:40;background:linear-gradient(180deg,rgba(11,18,32,.9),rgba(11,18,32,.6) 60%, transparent)}
+    .nav{display:flex;align-items:center;justify-content:space-between;padding:16px 0}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.3px}
+    .brand .logo{width:36px;height:36px;display:grid;place-items:center;border-radius:10px;background:linear-gradient(135deg,var(--brand),var(--brand-2));font-weight:800}
+    nav a{margin:0 10px;color:#cbd5e1;font-weight:500}
+    .cta{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(90deg,var(--brand),var(--brand-2));color:#00111f;border:0;padding:12px 18px;border-radius:999px;font-weight:800;box-shadow:0 12px 24px rgba(14,165,233,.25);transition:transform .08s ease}
+    .cta:active{transform:translateY(1px)}
+
+    /* HERO */
+    .hero{padding:80px 0 40px;position:relative;overflow:hidden}
+    .glow{position:absolute;inset:auto -20% -30% -20%;height:520px;background:radial-gradient(60% 60% at 50% 0%, rgba(14,165,233,.25), transparent 60%)}
+    .hero-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:32px;align-items:center}
+    .title{font-size:clamp(32px, 4.2vw, 56px);line-height:1.05;margin:0 0 12px;font-weight:900}
+    .subtitle{color:#cbd5e1;font-size:clamp(16px,2.2vw,20px);margin:0 0 24px}
+    .hero-card{background:linear-gradient(180deg,rgba(15,23,42,.7),rgba(15,23,42,.5));border:1px solid rgba(148,163,184,.15);border-radius:var(--radius);padding:18px}
+    .hero-mock{aspect-ratio:16/10;border-radius:12px;background:linear-gradient(135deg,#0b2535,#0c2b44);border:1px solid rgba(148,163,184,.18);position:relative;overflow:hidden}
+    .hero-badge{display:inline-flex;gap:8px;align-items:center;background:rgba(14,165,233,.12);border:1px solid rgba(56,189,248,.3);color:#a5f3fc;padding:8px 12px;border-radius:999px;font-weight:700;margin-bottom:12px}
+
+    /* SECTIONS */
+    section{padding:56px 0}
+    h2{font-size:clamp(24px,3vw,34px);margin:0 0 8px}
+    p.lead{color:#cbd5e1;margin:0 0 24px}
+    .grid{display:grid;gap:20px}
+    .grid.cols-3{grid-template-columns:repeat(3, minmax(0,1fr))}
+    .grid.cols-2{grid-template-columns:repeat(2, minmax(0,1fr))}
+    .card{background:linear-gradient(180deg,rgba(15,23,42,.75),rgba(15,23,42,.55));border:1px solid rgba(148,163,184,.15);border-radius:var(--radius);padding:20px}
+    .icon{font-size:22px;margin-right:8px}
+    .kicker{color:#7dd3fc;font-weight:800;letter-spacing:.08em;text-transform:uppercase;font-size:.85rem}
+
+    /* PRICING */
+    .pricing{display:grid;grid-template-columns:repeat(3, minmax(0,1fr));gap:20px}
+    .price-card{background:linear-gradient(180deg,rgba(15,23,42,.85),rgba(15,23,42,.6));border:1px solid rgba(148,163,184,.18);border-radius:18px;padding:24px;display:flex;flex-direction:column}
+    .price{font-size:36px;font-weight:900;margin:8px 0}
+    .pill{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;font-weight:700;border:1px solid rgba(148,163,184,.25);color:#e2e8f0}
+    .price-card ul{list-style:none;padding:0;margin:12px 0 0}
+    .price-card li{padding:6px 0;display:flex;gap:8px;align-items:flex-start}
+    .price-card .cta{margin-top:16px;justify-content:center}
+    .popular{outline:2px solid rgba(14,165,233,.35);box-shadow:0 0 0 6px rgba(14,165,233,.08) inset}
+
+    /* FORM */
+    form{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    label{font-weight:600;font-size:.95rem}
+    input,select,textarea{width:100%;padding:12px 14px;border-radius:12px;border:1px solid rgba(148,163,184,.25);background:#0b1220;color:var(--text);outline:none}
+    input:focus,select:focus,textarea:focus{box-shadow:var(--ring);border-color:var(--brand-2)}
+    textarea{min-height:120px;grid-column:1/-1}
+
+    /* FOOTER */
+    footer{padding:40px 0;color:#94a3b8}
+    .foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:20px}
+    .small{font-size:.9rem;color:#94a3b8}
+
+    /* RESPONSIVE */
+    @media (max-width: 900px){
+      .hero-grid{grid-template-columns:1fr}
+      .grid.cols-3{grid-template-columns:1fr}
+      .grid.cols-2{grid-template-columns:1fr}
+      .pricing{grid-template-columns:1fr}
+      form{grid-template-columns:1fr}
+      .foot-grid{grid-template-columns:1fr 1fr}
+      nav .hide-sm{display:none}
+    }
+
+    /* Cookie banner */
+    .cookie{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);width:min(860px,94vw);background:linear-gradient(180deg,rgba(15,23,42,.95),rgba(15,23,42,.9));border:1px solid rgba(148,163,184,.25);border-radius:16px;padding:16px 18px;display:none;gap:14px;z-index:50}
+    .cookie.show{display:flex}
+    .cookie .actions{margin-left:auto;display:flex;gap:10px}
+    .btn{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(148,163,184,.3);border-radius:999px;padding:10px 14px;color:#e2e8f0;background:transparent}
+    .btn.primary{background:linear-gradient(90deg,var(--brand),var(--brand-2));color:#00111f;border:0;font-weight:800}
+  </style>
+
+  <!-- Schema.org -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Organization",
+    "name":"oposiciones.ia",
+    "url":"https://oposiciones.ia",
+    "logo":"https://oposiciones.ia/logo.png"
+  }
+  </script>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <div class="logo">ia</div>
+        <span>oposiciones.ia</span>
+      </div>
+      <nav>
+        <a class="hide-sm" href="#funciones">Funciones</a>
+        <a class="hide-sm" href="#precios">Precios</a>
+        <a class="hide-sm" href="#como">Cómo funciona</a>
+        <a class="hide-sm" href="#contacto">Contacto</a>
+        <a class="cta" href="#registro">Empieza gratis</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="glow" aria-hidden="true"></div>
+      <div class="container hero-grid">
+        <div>
+          <div class="hero-badge">⚡ IA para oposiciones</div>
+          <h1 class="title">Encuentra tu convocatoria. <br/>Prepárate con IA.</h1>
+          <p class="subtitle">Centralizamos convocatorias, creamos tu plan de estudio y generamos tests y esquemas con Inteligencia Artificial. Todo en un solo lugar.</p>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <a href="#registro" class="cta">📅 Empezar gratis</a>
+            <a href="#demo" class="btn">▶️ Ver demo</a>
+          </div>
+          <p class="small" style="margin-top:10px">Sin tarjeta en el plan gratuito.</p>
+        </div>
+        <div class="hero-card">
+          <div class="hero-mock" role="img" aria-label="Vista previa del panel: calendario de estudio, progreso y próximos simulacros">
+            <!-- Mock sencillo -->
+            <svg viewBox="0 0 800 500" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="g" x1="0" x2="1">
+                  <stop offset="0%" stop-color="#0ea5e9" stop-opacity="0.6"/>
+                  <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.3"/>
+                </linearGradient>
+              </defs>
+              <rect x="24" y="24" width="752" height="60" rx="10" fill="url(#g)" />
+              <rect x="24" y="104" width="240" height="140" rx="12" fill="#0b2535" stroke="#13324a"/>
+              <rect x="284" y="104" width="492" height="140" rx="12" fill="#0b2535" stroke="#13324a"/>
+              <rect x="24" y="264" width="752" height="212" rx="12" fill="#0b2535" stroke="#13324a"/>
+              <g fill="#1b3e57">
+                <rect x="40" y="124" width="206" height="16" rx="8"/>
+                <rect x="40" y="152" width="140" height="14" rx="7"/>
+                <rect x="300" y="124" width="200" height="16" rx="8"/>
+                <rect x="300" y="152" width="450" height="14" rx="7"/>
+                <rect x="40" y="288" width="240" height="14" rx="7"/>
+                <rect x="40" y="314" width="720" height="10" rx="5"/>
+                <rect x="40" y="340" width="720" height="10" rx="5"/>
+                <rect x="40" y="366" width="560" height="10" rx="5"/>
+              </g>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FUNCIONES -->
+    <section id="funciones">
+      <div class="container">
+        <div class="kicker">Todo en uno</div>
+        <h2>Las herramientas que necesitas, potenciadas por IA</h2>
+        <p class="lead">Deja que la plataforma haga el trabajo pesado: buscar convocatorias, planificar tu estudio y generarte tests y resúmenes.</p>
+        <div class="grid cols-3">
+          <div class="card">
+            <h3>📄 Buscador de convocatorias</h3>
+            <p>Agregamos BOE y boletines autonómicos para que veas solo lo que te encaja: plazas, requisitos, plazos y enlaces oficiales.</p>
+          </div>
+          <div class="card">
+            <h3>🗓️ Planificador inteligente</h3>
+            <p>Introduce tu fecha objetivo y número de temas. Creamos un calendario con repasos espaciados y simulacros automáticos.</p>
+          </div>
+          <div class="card">
+            <h3>🧩 Generador de tests</h3>
+            <p>Convierte tus temas en preguntas tipo test, VF o desarrollo. Entrenado con patrones de exámenes reales.</p>
+          </div>
+          <div class="card">
+            <h3>🧠 Resúmenes y esquemas</h3>
+            <p>Sube un PDF y obtén esquemas visuales y “chuletas” listas para repasar.</p>
+          </div>
+          <div class="card">
+            <h3>🤖 Asistente 24/7</h3>
+            <p>Pregunta dudas de leyes y reglamentos. Explicaciones con ejemplos y referencias.</p>
+          </div>
+          <div class="card">
+            <h3>📊 Progreso y analítica</h3>
+            <p>Domina tu preparación con métricas, rachas de estudio y ranking amistoso.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CÓMO FUNCIONA -->
+    <section id="como">
+      <div class="container">
+        <div class="kicker">En 4 pasos</div>
+        <h2>Cómo funciona</h2>
+        <div class="grid cols-2" style="align-items:start">
+          <div class="card">
+            <ol style="margin:0;padding-left:20px">
+              <li><strong>Regístrate</strong> y elige tu oposición.</li>
+              <li><strong>Detectamos convocatorias</strong> y fechas relevantes.</li>
+              <li><strong>Sube tu temario</strong> (PDF/Word) o usa el oficial.</li>
+              <li><strong>Empieza a estudiar</strong> con plan, tests y resúmenes.</li>
+            </ol>
+          </div>
+          <div class="card" id="demo">
+            <h3 style="margin-top:0">Demo (MVP)</h3>
+            <p>Prueba un test generado por IA con 10 preguntas de muestra basadas en la Constitución.</p>
+            <a class="btn primary" href="#registro">Probar gratis</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRECIOS -->
+    <section id="precios">
+      <div class="container">
+        <div class="kicker">Precios</div>
+        <h2>Empieza gratis, escala cuando lo necesites</h2>
+        <div class="pricing">
+          <div class="price-card">
+            <span class="pill">GRATIS</span>
+            <div class="price">0 €</div>
+            <p class="small">Sin tarjeta. Ideal para empezar.</p>
+            <ul>
+              <li>✔️ Buscador de convocatorias</li>
+              <li>✔️ 1 plan de estudio</li>
+              <li>✔️ 1 test generado (10 preguntas)</li>
+              <li>—</li>
+            </ul>
+            <a class="cta" href="#registro">Empezar</a>
+          </div>
+          <div class="price-card popular">
+            <span class="pill">PRO</span>
+            <div class="price">14,99 € / mes</div>
+            <p class="small">Para opositores en serio</p>
+            <ul>
+              <li>✔️ Tests ilimitados</li>
+              <li>✔️ Planes avanzados con repasos</li>
+              <li>✔️ Resúmenes y esquemas</li>
+              <li>✔️ Exportación PDF</li>
+            </ul>
+            <a class="cta" href="#registro">Probar PRO</a>
+          </div>
+          <div class="price-card">
+            <span class="pill">PREMIUM</span>
+            <div class="price">24,99 € / mes</div>
+            <p class="small">Todo + tutor IA</p>
+            <ul>
+              <li>✔️ Todo lo de PRO</li>
+              <li>✔️ Asistente IA 24/7</li>
+              <li>✔️ Simulacros oficiales</li>
+              <li>✔️ Prioridad de soporte</li>
+            </ul>
+            <a class="cta" href="#registro">Ir a PREMIUM</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- REGISTRO / LEADS -->
+    <section id="registro">
+      <div class="container">
+        <div class="kicker">Acceso anticipado</div>
+        <h2>Reserva tu usuario</h2>
+        <p class="lead">Déjanos tus datos y te avisamos cuando abramos. Si eres academia, te contactamos para integrar vuestro temario.</p>
+        <div class="card">
+          <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+            <div>
+              <label for="name">Nombre</label>
+              <input id="name" name="name" placeholder="Tu nombre" required />
+            </div>
+            <div>
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" placeholder="tu@email.com" required />
+            </div>
+            <div>
+              <label for="opos">Oposición</label>
+              <input id="opos" name="oposicion" placeholder="p. ej., TIC A1, Gestión A2, Policía, etc." />
+            </div>
+            <div>
+              <label for="perfil">Perfil</label>
+              <select id="perfil" name="perfil">
+                <option>Opositor/a</option>
+                <option>Academia</option>
+                <option>Profesor/a</option>
+              </select>
+            </div>
+            <div>
+              <label for="msg">¿Qué te gustaría que hiciera la plataforma?</label>
+              <textarea id="msg" name="mensaje" placeholder="Cuéntanos tus necesidades"></textarea>
+            </div>
+            <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+              <button class="cta" type="submit">Unirme a la lista</button>
+              <label class="small" style="display:flex;align-items:center;gap:8px">
+                <input type="checkbox" required name="terms" /> Acepto la <a href="#" style="margin-left:6px">política de privacidad</a>
+              </label>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="contacto">
+    <div class="container foot-grid">
+      <div>
+        <div class="brand" style="margin-bottom:8px">
+          <div class="logo">ia</div>
+          <span>oposiciones.ia</span>
+        </div>
+        <p class="small">IA para opositores. Centraliza convocatorias, planifica tu estudio y practica con tests y resúmenes generados por IA.</p>
+        <p class="small">Contacto: <a href="mailto:contacto@oposiciones.ia">contacto@oposiciones.ia</a></p>
+      </div>
+      <div>
+        <strong>Producto</strong>
+        <ul style="list-style:none;padding:0;margin:8px 0 0;line-height:1.9">
+          <li><a href="#funciones">Funciones</a></li>
+          <li><a href="#precios">Precios</a></li>
+          <li><a href="#como">Cómo funciona</a></li>
+        </ul>
+      </div>
+      <div>
+        <strong>Empresa</strong>
+        <ul style="list-style:none;padding:0;margin:8px 0 0;line-height:1.9">
+          <li><a href="#">Quiénes somos</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Prensa</a></li>
+        </ul>
+      </div>
+      <div>
+        <strong>Legal</strong>
+        <ul style="list-style:none;padding:0;margin:8px 0 0;line-height:1.9">
+          <li><a href="#">Aviso legal</a></li>
+          <li><a href="#">Privacidad</a></li>
+          <li><a href="#">Cookies</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="container" style="margin-top:20px;border-top:1px solid rgba(148,163,184,.18);padding-top:16px">
+      <p class="small">© <span id="y"></span> oposiciones.ia. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <!-- Cookie banner -->
+  <div class="cookie" id="cookie">
+    <div>
+      <strong>Usamos cookies</strong>
+      <div class="small">Para analítica y mejorar tu experiencia. Puedes aceptar o configurar tus preferencias.</div>
+    </div>
+    <div class="actions">
+      <button class="btn" id="cookie-config">Configurar</button>
+      <button class="btn primary" id="cookie-accept">Aceptar</button>
+    </div>
+  </div>
+
+  <!-- JS mínimo -->
+  <script>
+    // año footer
+    document.getElementById('y').textContent = new Date().getFullYear();
+
+    // scroll suave para anclas
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', e=>{
+        const id = a.getAttribute('href');
+        if(id.length>1){
+          e.preventDefault();
+          document.querySelector(id)?.scrollIntoView({behavior:'smooth'});
+        }
+      })
+    })
+
+    // cookie banner mínimo con localStorage
+    const CKEY = 'opos-ia-cookie';
+    const banner = document.getElementById('cookie');
+    const saved = localStorage.getItem(CKEY);
+    if(!saved){ banner.classList.add('show'); }
+    document.getElementById('cookie-accept').onclick = ()=>{
+      localStorage.setItem(CKEY, JSON.stringify({accepted:true, ts:Date.now()}));
+      banner.classList.remove('show');
+    };
+    document.getElementById('cookie-config').onclick = ()=>{
+      alert('Aquí iría tu gestor de cookies / preferencias.');
+    };
+  </script>
+</body>
+</html>
