@@ -1,0 +1,14 @@
+# Ignorar el entorno virtual de Python
+venv/
+venv*/
+
+# Ignorar archivos de caché de Python
+__pycache__/
+*.pyc
+
+# ---------------------------------------------
+# ARCHIVOS CRÍTICOS DE STREAMLIT A IGNORAR
+# ---------------------------------------------
+
+# El archivo de secretos de Streamlit (¡CRÍTICO!)
+.streamlit/secrets.toml
