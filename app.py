@@ -184,7 +184,7 @@ if st.button("✨ Analizar mi Perfil con IA"):
                 except Exception as e:
                     # ¡AQUÍ se mostrará el error específico en la UI!
                     st.error("❌ ERROR AL ENVIAR CORREO: Fallo en la conexión SMTP. Revisa host/puerto y credenciales.")
-                    st.code(f"Detalles del Error: {e}", language="text").
+                    st.code(f"Detalles del Error: {e}", language="text")
 
                 # ----------------------------------------------------
                 
