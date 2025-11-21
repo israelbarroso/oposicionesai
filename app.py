@@ -165,7 +165,6 @@ if st.button("✨ Analizar mi Perfil con IA"):
                 st.markdown(resultado)
                 
                 st.write("---")
-                
                 # --- LÓGICA DE ENVÍO DE EMAIL ---
                 
                 # 1. Preparar el cuerpo del email (usando HTML básico)
@@ -184,12 +183,19 @@ if st.button("✨ Analizar mi Perfil con IA"):
                 """
                 
                 # 2. Llamar a la función de envío
-                if send_email(email, "✅ Tu Informe de Oposiciones Personalizado (Oposiciones.ai)", email_body):
-                    # Mensaje de éxito visible para el usuario
+                envio_exitoso = send_email(email, "✅ Tu Informe de Oposiciones Personalizado (Oposiciones.ai)", email_body)
+                
+                if envio_exitoso:
                     st.success(f"📧 ¡Informe enviado a {email}! Revisa tu bandeja de entrada o spam.")
                 else:
-                    # El mensaje de error ya está definido dentro de la función send_email
-                    pass
+                    # El mensaje de error detallado ya lo muestra la función send_email, 
+                    # pero este catch asegura que el usuario lo vea.
+                    st.warning("El análisis fue exitoso, pero **falló el envío del correo**. Revisa las credenciales SMTP en los 'Secrets' de Streamlit Cloud.")
+
+                # ----------------------------------------------------
+                
+                st.write("---") # Aseguramos que la línea divisoria se muestra SÓLO después del envío/error
+                
                 # --- LÓGICA DE REDIRECCIÓN INTELIGENTE ---
                 # Si el usuario es TIC (detectado por el input), mostramos TU ACADEMIA
                 if "Informática" in rama or "STEM" in rama:
