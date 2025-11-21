@@ -163,7 +163,19 @@ if st.button("✨ Analizar mi Perfil con IA"):
                 # --- LÓGICA DE ENVÍO DE EMAIL ---
                 
                 # 1. Preparar el cuerpo del email (usando HTML básico)
-                email_body = resultado
+                email_body = f"""
+                <html>
+                    <body>
+                        <p>Estimado/a opositor/a,</p>
+                        <p>Aquí tienes tu informe de orientación personalizado:</p>
+                        <hr>
+                        {resultado.replace('\n', '<br>')}
+                        <hr>
+                        <p>¡Mucho éxito en tu preparación!</p>
+                        <p>El equipo de Oposiciones.ai</p>
+                    </body>
+                </html>
+                """
                 
                 # 2. Llamada a la función de envío envuelta en try/except
                 try:
