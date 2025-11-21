@@ -166,6 +166,30 @@ if st.button("✨ Analizar mi Perfil con IA"):
                 
                 st.write("---")
                 
+                # --- LÓGICA DE ENVÍO DE EMAIL ---
+                
+                # 1. Preparar el cuerpo del email (usando HTML básico)
+                email_body = f"""
+                <html>
+                    <body>
+                        <p>Estimado/a opositor/a,</p>
+                        <p>Aquí tienes tu informe de orientación personalizado:</p>
+                        <hr>
+                        {resultado.replace('\n', '<br>')}
+                        <hr>
+                        <p>¡Mucho éxito en tu preparación!</p>
+                        <p>El equipo de Oposiciones.ai</p>
+                    </body>
+                </html>
+                """
+                
+                # 2. Llamar a la función de envío
+                if send_email(email, "✅ Tu Informe de Oposiciones Personalizado (Oposiciones.ai)", email_body):
+                    # Mensaje de éxito visible para el usuario
+                    st.success(f"📧 ¡Informe enviado a {email}! Revisa tu bandeja de entrada o spam.")
+                else:
+                    # El mensaje de error ya está definido dentro de la función send_email
+                    pass
                 # --- LÓGICA DE REDIRECCIÓN INTELIGENTE ---
                 # Si el usuario es TIC (detectado por el input), mostramos TU ACADEMIA
                 if "Informática" in rama or "STEM" in rama:
