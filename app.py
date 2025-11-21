@@ -7,7 +7,12 @@ from openai import OpenAI
 # Coloca tu logo.png en la misma carpeta
 col_logo, col_text = st.columns([1, 5])
 with col_logo:
-    st.image("logo_itic.png", width=80) # Ajusta el nombre del archivo
+    # Asegúrate de tener el archivo logo_itic.png en la carpeta o comenta esta línea si no lo tienes aún
+    try:
+        st.image("logo_itic.png", width=80) 
+    except:
+        st.write("") # Si falla la imagen, no rompe la app
+
 with col_text:
     st.markdown('<div class="main-header">oposiciones.ai</div>', unsafe_allow_html=True)
     
@@ -100,16 +105,8 @@ except Exception as e:
     st.error(f"❌ ERROR al inicializar la API: {e}")
     st.stop()
 
-
-# --- SIDEBAR (Aviso legal y branding) ---
-# with st.sidebar:
-#    st.header("⚙️ Configuración")
-#    st.info("La API Key se carga de forma segura desde el archivo 'secrets.toml'.")
-#    st.write("---")
-#    st.write("© 2024 Oposiciones.ai")
-
 # --- INTERFAZ PRINCIPAL ---
-st.markdown('<div class="main-header">oposiciones.ai</div>', unsafe_allow_html=True)
+# (Ya mostramos el header arriba con el logo, así que aquí podemos ir directo al subheader o dejarlo como estaba)
 st.markdown('<div class="sub-header">Descubre tu plaza ideal en la Administración Pública en segundos con Inteligencia Artificial.</div>', unsafe_allow_html=True)
 
 st.write("---")
@@ -138,8 +135,8 @@ with col2:
     )
 
 # --- CAPTURA DE LEAD (El paso clave) ---
-#st.write("###")
 email = st.text_input("📩 Recibe tu Hoja de Ruta Personalizada + Guía de Salarios 2025 en tu email", placeholder="ejemplo@correo.com")
+
 # Modificación de la función send_email (quita el try/except interno)
 def send_email(receiver_email, subject, body):
     # Cargar credenciales y configuración SMTP desde secrets.toml
@@ -155,13 +152,13 @@ def send_email(receiver_email, subject, body):
     msg['To'] = receiver_email
     
     # Conexión al servidor SMTP de One.com
-    # Si hay un error aquí (contraseña, host, puerto), se lanzará
     with smtplib.SMTP(smtp_host, smtp_port) as server:
         server.starttls() 
         server.login(smtp_username, smtp_password)
         server.sendmail(smtp_username, receiver_email, msg.as_string())
     
     return True # Solo se llega aquí si todo fue bien
+
 # --- LÓGICA DEL BOTÓN ---
 if st.button("✨ Analizar mi Perfil con IA"):
     if not email:
@@ -203,14 +200,14 @@ if st.button("✨ Analizar mi Perfil con IA"):
                 # --- RESULTADO ---
                 st.success("¡Análisis completado!")
                 st.markdown("### 📋 Tu Hoja de Ruta Personalizada")
-                st.markdown(f'<div class="resultado-card">{resultado}</div>', unsafe_allow_html=True)
+                st.markdown(f'<div class="result-card">{resultado}</div>', unsafe_allow_html=True)
                 
-                # Ejemplo estático visual (puedes pedirle a la IA que extraiga los datos más adelante)
+                # Ejemplo estático visual
                 datos_salarios = {"TIC A1": 45000, "TIC A2": 32000, "Administrativo": 25000}
                 st.bar_chart(datos_salarios)
 
-                
                 st.write("---")
+                
                 # --- LÓGICA DE ENVÍO DE EMAIL ---
                 
                 # 1. Preparar el cuerpo del email (usando HTML básico)
@@ -233,7 +230,6 @@ if st.button("✨ Analizar mi Perfil con IA"):
                     send_email(email, "✅ Tu Informe de Oposiciones Personalizado (Oposiciones.ai)", email_body)
                     st.success(f"📧 ¡Informe enviado a {email}! Revisa tu bandeja de entrada o spam.")
                 except Exception as e:
-                    # ¡AQUÍ se mostrará el error específico en la UI!
                     st.error("❌ ERROR AL ENVIAR CORREO: Fallo en la conexión SMTP. Revisa host/puerto y credenciales.")
                     st.code(f"Detalles del Error: {e}", language="text")
 
@@ -261,40 +257,37 @@ if st.button("✨ Analizar mi Perfil con IA"):
                     """
                     
                     # Usamos tu misma función para enviarte el correo a TI MISMO
-                    # (De info@itic.academy PARA info@itic.academy)
                     try:
                         send_email("info@itic.academy", asunto_interno, cuerpo_interno)
-                        # No mostramos nada al usuario, esto es silencioso para ti
                         print("Lead TIC enviado al administrador.") 
                     except:
-                        pass # Si falla el aviso interno, no molestamos al usuario
+                        pass 
                 
-                st.write("---") # Aseguramos que la línea divisoria se muestra SÓLO después del envío/error
+                st.write("---") 
                 
                 # --- LÓGICA DE REDIRECCIÓN INTELIGENTE ---
-                # Si el usuario es TIC (detectado por el input), mostramos TU ACADEMIA
+                # CORRECCIÓN DE INDENTACIÓN AQUÍ ABAJO
                 if "Informática" in rama or "STEM" in rama:
-    st.success("✅ **¡PERFIL VALIDADO!** Tienes una ventaja competitiva enorme.")
-    
-    st.markdown("""
-    <div style="background-color: #d1fae5; padding: 15px; border-radius: 10px; border: 1px solid #10b981;">
-        <h3 style="color: #065f46; margin:0;">🚀 Lanza tu carrera en ITIC Academy</h3>
-        <p style="color: #064e3b;">Somos especialistas en tu perfil. No pierdas tiempo con temarios genéricos.</p>
-        <ul>
-            <li>Temario específico TIC actualizado</li>
-            <li>Preparadores funcionarios del cuerpo</li>
-            <li>Simulacros de examen reales</li>
-        </ul>
-    </div>
-    """, unsafe_allow_html=True)
-    
-    # Botón grande
-    st.link_button("👉 VER CLASE DE PRUEBA GRATIS EN ITIC", "https://itic.academy")
+                    st.success("✅ **¡PERFIL VALIDADO!** Tienes una ventaja competitiva enorme.")
+                    
+                    st.markdown("""
+                    <div style="background-color: #d1fae5; padding: 15px; border-radius: 10px; border: 1px solid #10b981;">
+                        <h3 style="color: #065f46; margin:0;">🚀 Lanza tu carrera en ITIC Academy</h3>
+                        <p style="color: #064e3b;">Somos especialistas en tu perfil. No pierdas tiempo con temarios genéricos.</p>
+                        <ul>
+                            <li>Temario específico TIC actualizado</li>
+                            <li>Preparadores funcionarios del cuerpo</li>
+                            <li>Simulacros de examen reales</li>
+                        </ul>
+                    </div>
+                    """, unsafe_allow_html=True)
+                    
+                    # Botón grande
+                    st.link_button("👉 VER CLASE DE PRUEBA GRATIS EN ITIC", "https://itic.academy")
                 else:
                     # Si no es TIC, mostramos afiliados o generalistas
                     st.warning("📚 **Material recomendado:** Para estas oposiciones, necesitas un temario actualizado.")
                     col_af1, col_af2 = st.columns(2)
-                    # ¡Asegúrate de cambiar estos enlaces por los de tus afiliados!
                     col_af1.link_button("🔍 Buscar Preparadores", "https://itic.academy")
                     col_af2.link_button("🛒 Ver Temarios Recomendados", "https://itic.academy")
 
