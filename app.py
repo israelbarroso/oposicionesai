@@ -239,3 +239,47 @@ if st.button("✨ Analizar mi Perfil con IA"):
                                 <li><strong>Email:</strong> {email}</li>
                                 <li><strong>Nivel:</strong> {nivel_estudios}</li>
                                 <li><strong>Rama:</strong> {rama}</li>
+                                <li><strong>Disponibilidad:</strong> {disponibilidad}</li>
+                                <li><strong>Prioridad:</strong> {prioridad}</li>
+                            </ul>
+                        </body>
+                    </html>
+                    """
+                    
+                    # Usamos tu misma función para enviarte el correo a TI MISMO
+                    try:
+                        send_email("info@itic.academy", asunto_interno, cuerpo_interno)
+                        print("Lead TIC enviado al administrador.") 
+                    except:
+                        pass 
+                
+                st.write("---") 
+                
+                # --- LÓGICA DE REDIRECCIÓN INTELIGENTE ---
+                # CORRECCIÓN DE INDENTACIÓN AQUÍ ABAJO
+                if "Informática" in rama or "STEM" in rama:
+                    st.success("✅ **¡PERFIL VALIDADO!** Tienes una ventaja competitiva enorme.")
+                    
+                    st.markdown("""
+                    <div style="background-color: #d1fae5; padding: 15px; border-radius: 10px; border: 1px solid #10b981;">
+                        <h3 style="color: #065f46; margin:0;">🚀 Lanza tu carrera en ITIC Academy</h3>
+                        <p style="color: #064e3b;">Somos especialistas en tu perfil. No pierdas tiempo con temarios genéricos.</p>
+                        <ul>
+                            <li>Temario específico TIC actualizado</li>
+                            <li>Preparadores funcionarios del cuerpo</li>
+                            <li>Simulacros de examen reales</li>
+                        </ul>
+                    </div>
+                    """, unsafe_allow_html=True)
+                    
+                    # Botón grande
+                    st.link_button("👉 VER CLASE DE PRUEBA GRATIS EN ITIC", "https://itic.academy")
+                else:
+                    # Si no es TIC, mostramos afiliados o generalistas
+                    st.warning("📚 **Material recomendado:** Para estas oposiciones, necesitas un temario actualizado.")
+                    col_af1, col_af2 = st.columns(2)
+                    col_af1.link_button("🔍 Buscar Preparadores", "https://itic.academy")
+                    col_af2.link_button("🛒 Ver Temarios Recomendados", "https://itic.academy")
+
+            except Exception as e:
+                st.error(f"Hubo un error con la IA. Esto puede ser por límites de uso o un error en la clave. Error: {e}")
