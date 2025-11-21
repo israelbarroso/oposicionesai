@@ -184,9 +184,39 @@ if st.button("✨ Analizar mi Perfil con IA"):
                 except Exception as e:
                     # ¡AQUÍ se mostrará el error específico en la UI!
                     st.error("❌ ERROR AL ENVIAR CORREO: Fallo en la conexión SMTP. Revisa host/puerto y credenciales.")
-                    st.code(f"Detalles del Error: {e}", language="text")
+                    st.code(f"Detalles del Error: {e}", language="text").
 
                 # ----------------------------------------------------
+                
+                # --- NUEVO: CAPTURA DE LEAD TIC ---
+                # Verificamos si el perfil es TIC
+                if "Informática" in rama or "STEM" in rama:
+                    
+                    # Preparamos los datos para TI
+                    asunto_interno = f"🔔 NUEVO LEAD TIC: {email}"
+                    cuerpo_interno = f"""
+                    <html>
+                        <body>
+                            <h2>Nuevo aspirante TIC detectado</h2>
+                            <ul>
+                                <li><strong>Email:</strong> {email}</li>
+                                <li><strong>Nivel:</strong> {nivel_estudios}</li>
+                                <li><strong>Rama:</strong> {rama}</li>
+                                <li><strong>Disponibilidad:</strong> {disponibilidad}</li>
+                                <li><strong>Prioridad:</strong> {prioridad}</li>
+                            </ul>
+                        </body>
+                    </html>
+                    """
+                    
+                    # Usamos tu misma función para enviarte el correo a TI MISMO
+                    # (De info@itic.academy PARA info@itic.academy)
+                    try:
+                        send_email("info@itic.academy", asunto_interno, cuerpo_interno)
+                        # No mostramos nada al usuario, esto es silencioso para ti
+                        print("Lead TIC enviado al administrador.") 
+                    except:
+                        pass # Si falla el aviso interno, no molestamos al usuario
                 
                 st.write("---") # Aseguramos que la línea divisoria se muestra SÓLO después del envío/error
                 
