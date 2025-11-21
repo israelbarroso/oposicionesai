@@ -4,15 +4,6 @@ from email.header import Header
 import streamlit as st
 from openai import OpenAI
 
-# Coloca tu logo.png en la misma carpeta
-col_logo, col_text = st.columns([1, 5])
-with col_logo:
-    # Asegúrate de tener el archivo logo_itic.png en la carpeta o comenta esta línea si no lo tienes aún
-    try:
-        st.image("logo_itic.png", width=80) 
-    except:
-        st.write("") # Si falla la imagen, no rompe la app
-
 with col_text:
     st.markdown('<div class="main-header">oposiciones.ai</div>', unsafe_allow_html=True)
     
@@ -202,9 +193,6 @@ if st.button("✨ Analizar mi Perfil con IA"):
                 st.markdown("### 📋 Tu Hoja de Ruta Personalizada")
                 st.markdown(f'<div class="result-card">{resultado}</div>', unsafe_allow_html=True)
                 
-                # Ejemplo estático visual
-                datos_salarios = {"TIC A1": 45000, "TIC A2": 32000, "Administrativo": 25000}
-                st.bar_chart(datos_salarios)
 
                 st.write("---")
                 
