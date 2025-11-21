@@ -273,7 +273,7 @@ if st.button("✨ Analizar mi Perfil con IA"):
                     """, unsafe_allow_html=True)
                     
                     # Botón grande
-                    st.link_button("👉 VER CLASE DE PRUEBA GRATIS EN ITIC", "https://itic.academy")
+                    st.link_button("👉 PREPARA EN ITIC ACADEMY", "https://itic.academy")
                 else:
                     # Si no es TIC, mostramos afiliados o generalistas
                     st.warning("📚 **Material recomendado:** Para estas oposiciones, necesitas un temario actualizado.")
