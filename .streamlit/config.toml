@@ -1,4 +1,9 @@
 [browser]
+# ¡CLAVE! Oculta el botón 'Fork' y el icono de GitHub/código
+showSidebarNavigation = false
+hideToolbar = true
+
+# Otras configuraciones que ya añadimos
 gatherUsageStats = false
 
 [ui]
