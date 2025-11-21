@@ -1,3 +1,6 @@
+import smtplib
+from email.mime.text import MIMEText
+from email.header import Header
 import streamlit as st
 from openai import OpenAI
 
@@ -89,9 +92,35 @@ with col2:
     )
 
 # --- CAPTURA DE LEAD (El paso clave) ---
-st.write("###")
-email = st.text_input("📧 Tu email para enviarte el informe detallado (Opcional)", placeholder="ejemplo@correo.com")
-
+#st.write("###")
+email = st.text_input("📧 Tu email para enviarte el informe detallado", placeholder="ejemplo@correo.com")
+def send_email(receiver_email, subject, body):
+    try:
+        # Cargar credenciales y configuración SMTP desde secrets.toml
+        smtp_username = st.secrets["smtp"]["username"]
+        smtp_password = st.secrets["smtp"]["password"]
+        smtp_host = st.secrets["smtp"]["host"]  # send.one.com
+        smtp_port = st.secrets["smtp"]["port"]  # 587
+        
+        # Configurar el mensaje
+        msg = MIMEText(body, 'html', 'utf-8')
+        msg['Subject'] = Header(subject, 'utf-8')
+        msg['From'] = smtp_username
+        msg['To'] = receiver_email
+        
+        # Conexión al servidor SMTP de One.com (usando TLS/STARTTLS en el puerto 587)
+        with smtplib.SMTP(smtp_host, smtp_port) as server:
+            # Poner la conexión en modo seguro TLS
+            server.starttls() 
+            # Iniciar sesión
+            server.login(smtp_username, smtp_password)
+            server.sendmail(smtp_username, receiver_email, msg.as_string())
+        
+        return True
+    except Exception as e:
+        # Esto te ayudará a diagnosticar si las credenciales o el host/puerto son incorrectos
+        st.error(f"Error al enviar el correo desde one.com: {e}") 
+        return False
 # --- LÓGICA DEL BOTÓN ---
 if st.button("✨ Analizar mi Perfil con IA"):
     if not email:
