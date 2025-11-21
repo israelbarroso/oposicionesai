@@ -4,6 +4,13 @@ from email.header import Header
 import streamlit as st
 from openai import OpenAI
 
+# Coloca tu logo.png en la misma carpeta
+col_logo, col_text = st.columns([1, 5])
+with col_logo:
+    st.image("logo_itic.png", width=80) # Ajusta el nombre del archivo
+with col_text:
+    st.markdown('<div class="main-header">oposiciones.ai</div>', unsafe_allow_html=True)
+    
 # --- CONFIGURACIÓN DE LA PÁGINA ---
 st.set_page_config(
     page_title="Oposiciones.ai | Tu Orientador Inteligente",
@@ -14,26 +21,65 @@ st.set_page_config(
 # --- CSS PERSONALIZADO ---
 st.markdown("""
     <style>
+    /* Importar fuente moderna de Google Fonts */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+    html, body, [class*="css"]  {
+        font-family: 'Inter', sans-serif;
+    }
+
+    /* Estilo del botón principal */
     .stButton>button {
         width: 100%;
-        background-color: #4F46E5;
+        background: linear-gradient(90deg, #4F46E5 0%, #7C3AED 100%);
         color: white;
-        border-radius: 8px;
-        height: 3em;
-        font-weight: bold;
-    }
-    .main-header {
-        font-size: 2.5rem;
+        border: none;
+        border-radius: 12px;
+        height: 3.5em;
         font-weight: 700;
-        color: #1E293B;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 14px 0 rgba(124, 58, 237, 0.39);
+    }
+    .stButton>button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px 0 rgba(124, 58, 237, 0.23);
+    }
+
+    /* Títulos */
+    .main-header {
+        font-size: 3rem;
+        font-weight: 800;
+        background: -webkit-linear-gradient(left, #1E293B, #4F46E5);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
         text-align: center;
-        margin-bottom: 1rem;
+        margin-bottom: 0.5rem;
+        letter-spacing: -1px;
     }
     .sub-header {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
         color: #64748B;
         text-align: center;
-        margin-bottom: 2rem;
+        margin-bottom: 2.5rem;
+        line-height: 1.6;
+    }
+
+    /* Inputs y Selects */
+    .stSelectbox > div > div {
+        background-color: #F8FAFC;
+        border-radius: 8px;
+        border: 1px solid #E2E8F0;
+    }
+    
+    /* Card de resultado (usar con markdown HTML) */
+    .result-card {
+        background-color: white;
+        padding: 2rem;
+        border-radius: 16px;
+        border: 1px solid #E2E8F0;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        margin-top: 1.5rem;
     }
     </style>
     """, unsafe_allow_html=True)
@@ -93,7 +139,7 @@ with col2:
 
 # --- CAPTURA DE LEAD (El paso clave) ---
 #st.write("###")
-email = st.text_input("📧 Tu email para enviarte el informe detallado", placeholder="ejemplo@correo.com")
+email = st.text_input("📩 Recibe tu Hoja de Ruta Personalizada + Guía de Salarios 2025 en tu email", placeholder="ejemplo@correo.com")
 # Modificación de la función send_email (quita el try/except interno)
 def send_email(receiver_email, subject, body):
     # Cargar credenciales y configuración SMTP desde secrets.toml
@@ -157,7 +203,12 @@ if st.button("✨ Analizar mi Perfil con IA"):
                 # --- RESULTADO ---
                 st.success("¡Análisis completado!")
                 st.markdown("### 📋 Tu Hoja de Ruta Personalizada")
-                st.markdown(resultado)
+                st.markdown(f'<div class="resultado-card">{resultado}</div>', unsafe_allow_html=True)
+                
+                # Ejemplo estático visual (puedes pedirle a la IA que extraiga los datos más adelante)
+                datos_salarios = {"TIC A1": 45000, "TIC A2": 32000, "Administrativo": 25000}
+                st.bar_chart(datos_salarios)
+
                 
                 st.write("---")
                 # --- LÓGICA DE ENVÍO DE EMAIL ---
@@ -223,9 +274,22 @@ if st.button("✨ Analizar mi Perfil con IA"):
                 # --- LÓGICA DE REDIRECCIÓN INTELIGENTE ---
                 # Si el usuario es TIC (detectado por el input), mostramos TU ACADEMIA
                 if "Informática" in rama or "STEM" in rama:
-                    st.info("💡 **Consejo de experto:** Tienes el perfil perfecto para el Cuerpo TIC. Es la oposición con mejor ratio plaza/aspirante ahora mismo.")
-                    # ¡Asegúrate de cambiar este enlace por el de tu academia!
-                    st.link_button("🚀 Preparar TIC A1/A2 con Expertos", "https://itic.academy") 
+    st.success("✅ **¡PERFIL VALIDADO!** Tienes una ventaja competitiva enorme.")
+    
+    st.markdown("""
+    <div style="background-color: #d1fae5; padding: 15px; border-radius: 10px; border: 1px solid #10b981;">
+        <h3 style="color: #065f46; margin:0;">🚀 Lanza tu carrera en ITIC Academy</h3>
+        <p style="color: #064e3b;">Somos especialistas en tu perfil. No pierdas tiempo con temarios genéricos.</p>
+        <ul>
+            <li>Temario específico TIC actualizado</li>
+            <li>Preparadores funcionarios del cuerpo</li>
+            <li>Simulacros de examen reales</li>
+        </ul>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Botón grande
+    st.link_button("👉 VER CLASE DE PRUEBA GRATIS EN ITIC", "https://itic.academy")
                 else:
                     # Si no es TIC, mostramos afiliados o generalistas
                     st.warning("📚 **Material recomendado:** Para estas oposiciones, necesitas un temario actualizado.")
