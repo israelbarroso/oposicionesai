@@ -1,0 +1,13 @@
+[browser]
+gatherUsageStats = false
+
+[ui]
+hideSidebarNav = false # Mantenlo en false si quieres la barra lateral (si tienes multi-página)
+hideMainMenu = true    # Oculta el menú de hamburguesa (☰)
+
+[global]
+disableWatchdog = false
+
+[ui]
+# Esta línea es la clave para el pie de página
+hideFooter = true
